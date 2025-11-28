@@ -1,18 +1,28 @@
-const noteBox = document.getElementById("noteBox")
-const saveBtn = document.getElementById("saveBtn")
-const boldBtn = document.getElementById("boldBtn")
-const italicBtn = document.getElementById("italicBtn")
+document.addEventListener("DOMContentLoaded", () => {
+    const noteBox = document.getElementById("noteBox")
+    const saveBtn = document.getElementById("saveBtn")
+    const boldBtn = document.getElementById("boldBtn")
+    const italicBtn = document.getElementById("italicBtn")
 
-//GET notes_data
-fetch('/note')
-    .then(res => res.text())
-    .then(text => noteBox.value = text)
+    const statusSpan = document.getElementById("status")
 
-//POST notes_data
-saveBtn.addEventListener('click', () => {
-    fetch("/note", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({text: noteBox.value})
-    });
-});
+    //Encapsulated function: GET notes_data
+    async function loadNote(){
+        const res = await fetch('/note');
+        const text = await res.text();
+        noteBox.value = text;
+    }
+
+    //POST notes_data
+    async function saveNote(){
+        const res = await fetch("/note", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({text: noteBox.value})
+        });
+        statusSpan.textContent = "Just Saved!";
+    }
+
+    loadNote();
+    saveBtn.addEventListener('click', saveNote);
+})
