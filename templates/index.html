@@ -1,0 +1,18 @@
+<!DOCTYPE html> <!-- html5 makes this insensitive, so lowercase doctype is fine also -->
+<html lang = en>
+<head>
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width=device-width,initial-scale=1" />
+    <title>Shared Notebook</title>
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'style.css') }}">
+</head>
+<body>
+    <main>
+        <h1>Shared Notebook</h1>
+        <textarea id = "noteBox" placeholder = "Enter your notes here..."></textarea>
+        <button id = "saveBtn">save</button>
+    </main>
+
+    <script src = "{{ url_for('static', filename = 'app.js') }}"></script>
+</body>
+</html>

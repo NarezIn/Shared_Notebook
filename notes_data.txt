@@ -1,0 +1,14 @@
+Test 001: 
+I hope this is a success.
+
+Test 002 (16: 44, 11/26/2025):
+Today I worked out but I felt I'm getting weak.
+
+Test 003 (16:45, 11/26/2025):
+Test by editing the 'database' (just a .txt file)
+
+Test 004 (17:35, 11/27/2025):
+1. words font, color...
+2. auto-save (shows auto-save status)
+3. Bright/dark mode switch
+4. Line counting button/window
