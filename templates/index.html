@@ -10,7 +10,12 @@
     <main>
         <h1>Shared Notebook</h1>
         <textarea id = "noteBox" placeholder = "Enter your notes here..."></textarea>
-        <button id = "saveBtn">save</button>
+        <div>
+            <button id = "saveBtn">Save</button>
+            <button id = "boldBtn">Bold?</button>
+            <button id = "italicBtn">Italicize?</button>
+        </div>
+
     </main>
 
     <script src = "{{ url_for('static', filename = 'app.js') }}"></script>

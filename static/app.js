@@ -1,5 +1,6 @@
 const noteBox = document.getElementById("noteBox")
 const saveBtn = document.getElementById("saveBtn")
+const boldBtn = document.getElementById("boldBtn")
 
 //GET notes_data
 fetch('/note')
