@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveBtn = document.getElementById("saveBtn")
     const boldBtn = document.getElementById("boldBtn")
     const italicBtn = document.getElementById("italicBtn")
+    const preview = document.getElementById("preview");
 
     const statusSpan = document.getElementById("status")
 
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({text: noteBox.value})
         });
-        statusSpan.textContent = "Just Saved!";
+        statusSpan.textContent = "Just Saved!";//This raises an error.... Resolve it later.
     }
 
     async function boldNote(){
