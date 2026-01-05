@@ -1,6 +1,21 @@
-textarea{
-    width: 100%;
+.editor{
+    display: flex;
+    gap: 16px;
+}
+
+.editor > #noteBox,
+.editor > #preview{
+    flex: 1;
     height: 500px;
+    padding: 12px;
+    box-sizing: border-box; /* maybe do this border-box forall */
+    overflow-y: auto;
+}
+
+#preview {
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    white-space: pre-wrap;
 }
 
 button{

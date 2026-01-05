@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch('/note');
         const text = await res.text();
         noteBox.value = text;
+        preview.innerHTML = renderMarkdown(text);
     }
 
     //POST notes_data
@@ -24,7 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
         statusSpan.textContent = "Just Saved!";//This raises an error.... Resolve it later.
     }
 
-    async function boldNote(){
+    function renderMarkdown(text) {
+        // bold: **text** → <b>text</b>
+        text = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+        // italic: *text* → <i>text</i>
+        text = text.replace(/\*(.*?)\*/g, '<i>$1</i>');
+        return text;
+    }
+
+    function setPreviewInnerHTML(){
+        preview.innerHTML = renderMarkdown(noteBox.value);
+    }
+
+    function boldNote(){
         /*
         * Applies bold formatting to selected text. Unbold the text if text is already bold.
         * preserves cursor/selection position.
@@ -61,9 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
         noteBox.focus();//restore cursor focus after modifying text value
         noteBox.selectionStart = start + frontOffset;
         noteBox.selectionEnd = end + backOffset;//To keep the selection of text the same after clicking btn.
+
+        noteBox.dispatchEvent(new Event('input'));//Manually kindle 'input', so rendered markdown would display bold text right after clicking boldBtn.
     }
 
-    async function italicizeNote(){
+    function italicizeNote(){
         /* 
         * Applies italic formatting to selected text.
         * Basically the same as boldNote.
@@ -91,4 +106,5 @@ document.addEventListener("DOMContentLoaded", () => {
     saveBtn.addEventListener('click', saveNote);
     boldBtn.addEventListener('click', boldNote);
     italicBtn.addEventListener('click', italicizeNote);
+    noteBox.addEventListener("input", setPreviewInnerHTML);
 })

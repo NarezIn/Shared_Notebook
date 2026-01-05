@@ -9,18 +9,18 @@
 <body>
     <main>
         <h1>Shared Notebook</h1>
-
-        <!-- This is where the user types Markdown text -->
-        <textarea id = "noteBox" placeholder = "Enter your notes here..."></textarea>
-
+        <div class = "editor">
+            <!-- This is where the user types Markdown text -->
+            <textarea id = "noteBox" placeholder = "Enter your notes here..."></textarea>
+            
+            <!-- This div will show the rendered Markdown in real-time -->
+            <div id="preview"></div>
+        </div>
         <div>
             <button id = "saveBtn">Save</button>
             <button id = "boldBtn">Bold?</button>
             <button id = "italicBtn">Italicize?</button>
         </div>
-        
-        <!-- This div will show the rendered Markdown in real-time -->
-        <div id="preview"></div>
     </main>
 
     <script src = "{{ url_for('static', filename = 'app.js') }}"></script>
