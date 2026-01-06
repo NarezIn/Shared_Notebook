@@ -31,14 +31,17 @@ Kikki is watching.
 
 Test 009:
 (10:49, 1/4/2026):
-****Yes, I got back to this project, and it's 2026 now.****
+Yes, I got back to this project, and it's 2026 now.
 (11:04, 1/4/2026):
 I bolded the text above and it only double asterisked the text. I tried to bold it again, now it's surrounded by a pair of four asterisks.
 (11:26, ~):
 **Tried to set selectionStart and End without calling focus() method first.** Turned out that cursor would not appear because focus() wasn't called.
 (11:28, ~):
-******Tried again.****** Right now I think I just need to set End = end + 4.
+Tried again.****** Right now I think I just need to set End = end + 4.
 (11:29, ~):
 **This feature should be all set now.** Aside from that it only wraps text with asterisk instead of actually bolding/italicizing *text.*
 (12:10, ~):
 Tried unbold.
+
+**Test 010 (1:16, 1/6/2026):**
+**Multiple-line bold test.** And it worked!

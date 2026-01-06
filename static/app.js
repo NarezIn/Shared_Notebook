@@ -53,29 +53,30 @@ document.addEventListener("DOMContentLoaded", () => {
         let before = value.slice(0, start);
         let selected = value.slice(start, end);
         let after = value.slice(end);
-        let backOffset = 0;
-        let frontOffset = 0;
+        let offset = 0;
         
-        if (selected.startsWith("**") && selected.endsWith("**")){
-            selected = selected.slice(2, -2);
-            backOffset = -4;
-        }
-        else if (value.slice(start - 2, start) == "**" && value.slice(end, end + 2) == "**"){
-            before = value.slice(0, start - 2);
-            after = value.slice(end + 2);
-            frontOffset = -2;
-            backOffset = -2;
-        }
-        else{
-            selected = "**" + selected + "**";
-            backOffset = 4;
-        }
-        noteBox.value = before + selected + after;
-        noteBox.focus();//restore cursor focus after modifying text value
-        noteBox.selectionStart = start + frontOffset;
-        noteBox.selectionEnd = end + backOffset;//To keep the selection of text the same after clicking btn.
+        const lines = selected.split("\n");
+        const processedLines = lines.map(line => {
+            if (line.startsWith("**") && line.endsWith("**")) {
+                offset -= 4;
+                return line.slice(2, -2);
+            } 
+            else {
+                offset += 4;
+                return "**" + line + "**";
+            }
+        });
+        const newSelected = processedLines.join("\n");
 
-        noteBox.dispatchEvent(new Event('input'));//Manually kindle 'input', so rendered markdown would display bold text right after clicking boldBtn.
+        const scrollPosi = noteBox.scrollTop;//remember the scroll position, cuz setting noteBox.value would auto-scroll to the buttom.
+        noteBox.value = before + newSelected + after;
+
+        noteBox.focus();//restore cursor focus after modifying text value
+        noteBox.selectionStart = start;
+        noteBox.selectionEnd = end + offset;//to keep the selection of text the same after clicking btn.
+
+        noteBox.scrollTop = scrollPosi;//restore scroll position.
+        noteBox.dispatchEvent(new Event('input'));//manually kindle 'input', so rendered markdown would display bold text right after clicking boldBtn.
     }
 
     function italicizeNote(){
