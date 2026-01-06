@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let after = value.slice(end);
         let backOffset = 0;
         let frontOffset = 0;
-
+        
         if (selected.startsWith("**") && selected.endsWith("**")){
             selected = selected.slice(2, -2);
             backOffset = -4;
@@ -86,6 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
         * 
         * NOT UPDATED YET.
         */
+        alert("This feature is not supported right now!");
+        return;
         const start = noteBox.selectionStart;
         const end = noteBox.selectionEnd;
         if (start == end){
