@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusSpan = document.getElementById("status");
     const userColumn = document.getElementById("userColumn");
     let username = localStorage.getItem("username");
-    let savedLinesCount = 0;
     
 
     async function getAnonyUser(){
@@ -29,30 +28,25 @@ document.addEventListener("DOMContentLoaded", () => {
         userColumn.textContent = notes.map(n => n.username).join('\n');
         noteBox.value = notes.map(n => n.text).join("\n");
         preview.innerHTML = renderMarkdown(noteBox.value);
-
-        savedLinesCount = notes.length;
+        //Try const fullText = notes.map(n => n.text).join("\n");
+        //and then see nteoBox.value = fullText;
     }
 
     //POST notes_data
     async function saveNote(){
         const user = await getAnonyUser();
         const lines = noteBox.value.split("\n");
-        const newLines = lines.slice(savedLinesCount);
 
-        for (let newLine of newLines){
-            //if (newLine.trim() == "") continue;//we need empty lines
-            let res = await fetch("/note", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    username: user,
-                    text: newLine
-                })
-            });
-        }
+        await fetch("/note", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: user,
+                text: lines
+            })
+        });
 
-        savedLinesCount = lines.length
-        loadNote();
+        await loadNote();
         statusSpan.textContent = "Just Saved!";//This raises an error.... Resolve it later.
     }
 
