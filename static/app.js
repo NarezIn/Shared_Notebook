@@ -1,27 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const noteBox = document.getElementById("noteBox")
-    const saveBtn = document.getElementById("saveBtn")
-    const boldBtn = document.getElementById("boldBtn")
-    const italicBtn = document.getElementById("italicBtn")
+    const noteBox = document.getElementById("noteBox");
+    const saveBtn = document.getElementById("saveBtn");
+    const boldBtn = document.getElementById("boldBtn");
+    const italicBtn = document.getElementById("italicBtn");
     const preview = document.getElementById("preview");
 
-    const statusSpan = document.getElementById("status")
+    const statusSpan = document.getElementById("status");
+    const userColumn = document.getElementById("userColumn");
+    let username = localStorage.getItem("username");
+    let savedLinesCount = 0;
+    
 
-    //Encapsulated function: GET notes_data
+    async function getAnonyUser(){
+        if (username) return username;
+        const res = await fetch("new_anony_user");
+        const data = await res.json();
+
+        username = data.username;
+        localStorage.setItem("username", username);
+        return username;
+    }
+
+    //would send a GET request and call notes_data in backend
     async function loadNote(){
         const res = await fetch('/note');
-        const text = await res.text();
-        noteBox.value = text;
-        preview.innerHTML = renderMarkdown(text);
+        const notes = await res.json();
+
+        userColumn.textContent = notes.map(n => n.username).join('\n');
+        noteBox.value = notes.map(n => n.text).join("\n");
+        preview.innerHTML = renderMarkdown(noteBox.value);
+
+        savedLinesCount = notes.length;
     }
 
     //POST notes_data
     async function saveNote(){
-        const res = await fetch("/note", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({text: noteBox.value})
-        });
+        const user = await getAnonyUser();
+        const lines = noteBox.value.split("\n");
+        const newLines = lines.slice(savedLinesCount);
+
+        for (let newLine of newLines){
+            //if (newLine.trim() == "") continue;//we need empty lines
+            let res = await fetch("/note", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    username: user,
+                    text: newLine
+                })
+            });
+        }
+
+        savedLinesCount = lines.length
+        loadNote();
         statusSpan.textContent = "Just Saved!";//This raises an error.... Resolve it later.
     }
 
