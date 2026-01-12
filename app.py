@@ -51,12 +51,16 @@ def read_note():
 def write_note():
     data = request.json # chatgpt: {"text": "xxxx"} from frontend
     username = data.get("username", "Anony000")
-    text = data.get("text", "placeholder, meaning errorrrrrr!") # this would be the 'text' written by the user in frontend
+    text = data.get("text", ["placeholder, meaning errorrrrrr!"])
 
-    notes = load_notes()
-    notes.append({"username": username, "text": text})
+    notes = []
+    for line in text:
+        notes.append({
+            "username": username, 
+            "text": line
+        })
     save_notes(notes)
-    return jsonify({"status": "ok"}) # try not jsonify?
+    return jsonify({"status": "ok"})
 
 if __name__ == "__main__":
     app.run(debug = True)
