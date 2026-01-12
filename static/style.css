@@ -1,18 +1,44 @@
 .editor{
     display: flex;
-    gap: 16px;
+    gap: 16px;/*this controls the gap between each element in editor div*/
 }
 
-.editor > #noteBox,
+.editor > #userColumn{
+    width: 80px;
+    border: 1px solid #ccc;
+    padding: 3px;
+    /*margin-right: 1px;*/
+    box-sizing: border-box; /* maybe do this border-box forall */
+    overflow-y: auto;
+
+    /* This to make sure words in userColumn and noteBox to have the same font and height */
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+}
+
+.editor > #noteBox{
+    flex: 1;
+    height: 500px;
+    padding: 3px 9px;
+    box-sizing: border-box; /* maybe do this border-box forall */
+    overflow-y: auto;
+
+    /* This to make sure words in userColumn and noteBox to have the same font and height */
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
 .editor > #preview{
     flex: 1;
     height: 500px;
     padding: 3px 9px;
     box-sizing: border-box; /* maybe do this border-box forall */
     overflow-y: auto;
-}
 
-#preview {
     border: 1px solid #ccc;
     background: #f9f9f9;
     white-space: pre-wrap;
